@@ -16,7 +16,9 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 
 # New Game
-#GET	/start
+GET		/start						controllers.WebUI.startGame
+# Draw board
+GET		/board						controllers.WebUI.drawBoard
 
 # Set dot
 # Win message

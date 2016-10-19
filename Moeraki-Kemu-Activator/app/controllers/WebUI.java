@@ -34,7 +34,7 @@ public class WebUI extends Controller {
 		}
 	}
 	
-	private void startGame() {
+	public Result startGame() {
 		Injector injector = Guice.createInjector(new ControllerModuleWithController());
 		
 		controller = injector.getInstance(de.htwg.se.moerakikemu.controller.controllerimpl.Controller.class);
@@ -44,7 +44,7 @@ public class WebUI extends Controller {
 		interfaces[0] = injector.getInstance(TextUI.class);
 		//interfaces[1] = injector.getInstance(GUI.class);
 
-		for (int i = 0; i < interfaces.length; i++) {
+		for (int i = 0; i < 1/*interfaces.length*/; i++) {
 			((IObserverSubject) controller).attatch((ObserverObserver) interfaces[i]);
 			interfaces[i].drawCurrentState();
 		}
@@ -62,5 +62,7 @@ public class WebUI extends Controller {
 		for (UserInterface ui : interfaces) {
 			ui.quit();
 		}
+		
+		return ok("Game created");
 	}
 }
