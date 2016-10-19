@@ -12,6 +12,6 @@ libraryDependencies ++= Seq(
   javaWs
 )
 
-libraryDependencies += "moeraki-kemu" % "moeraki-kemu" % "1.0-SNAPSHOT" from "file:.\\moeraki-kemu.jar"
+libraryDependencies += "moeraki-kemu" % "moeraki-kemu" % "1.0-SNAPSHOT" from "file:C:\\Users\\Eti\\git\\etgramli\\Moeraki_Kemu_Activator\\Moeraki-Kemu-Activator\\moeraki-kemu.jar"
 
 fork in run := true
