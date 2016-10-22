@@ -14,13 +14,9 @@ public class HtmlBoardBuilder implements HtmlAble {
     }
     
     public String getHtml() {
-        return getHtmlHead() + getHtmlBody();
+        return getHtmlBody();
     }
 
-    private String getHtmlHead() {
-        return "<head>\n <style>\n th, td {border: 1px solid black;} \n </style>\n </head>";
-    }
-    
     private String getHtmlBody() {
     	final int length = controller.getEdgeLength();
         StringBuilder htmlCode = new StringBuilder("<body>");

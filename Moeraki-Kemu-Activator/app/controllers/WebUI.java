@@ -7,6 +7,8 @@ import com.google.inject.Injector;
 
 import de.htwg.se.moerakikemu.controller.ControllerModuleWithController;
 import de.htwg.se.moerakikemu.controller.IController;
+import de.htwg.se.moerakikemu.controller.IControllerPlayer;
+import de.htwg.se.moerakikemu.controller.controllerimpl.ControllerPlayer;
 import de.htwg.se.moerakikemu.view.UserInterface;
 import de.htwg.se.moerakikemu.view.viewimpl.TextUI;
 import de.htwg.se.util.observer.IObserverSubject;
@@ -37,7 +39,8 @@ public class WebUI extends Controller {
 	public Result startGame() {
 		Injector injector = Guice.createInjector(new ControllerModuleWithController());
 		
-		controller = injector.getInstance(de.htwg.se.moerakikemu.controller.controllerimpl.Controller.class);
+		IControllerPlayer playerController = new ControllerPlayer();
+		controller = new de.htwg.se.moerakikemu.controller.controllerimpl.Controller(8, playerController);
 		htmlBuilder = new HtmlBoardBuilder(controller);
 	
 		UserInterface[] interfaces = new UserInterface[2];
