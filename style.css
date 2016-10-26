@@ -1,0 +1,31 @@
+h1, h2 {
+  font-family: "Arial";
+  color: red;
+  text-align: center;
+}
+
+h3, h4 {
+  font-family: "Arial";
+  color: red;
+  text-align: left;
+}
+
+html {
+  background: blue;
+}
+
+p.Kurzbeschreibung,
+ul.Spielmaterial,
+p.Spielfeld,
+p.Maori-Tane,
+p.Spielsteine,
+p.Zählsteine,
+p.Moeraki-Kugel,
+p.Stammesplättchen,
+ul.Ausgangssituation,
+ol.Spielverlauf,
+p.Spielende,
+ul.Spielende {
+  color: white;
+  text-align: left;
+}
