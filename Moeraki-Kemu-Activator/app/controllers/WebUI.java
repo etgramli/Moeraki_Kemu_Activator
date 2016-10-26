@@ -15,6 +15,7 @@ import de.htwg.se.util.observer.IObserverSubject;
 import de.htwg.se.util.observer.ObserverObserver;
 import html.HtmlBoardBuilder;
 import play.mvc.*;
+import views.html.*;
 
 @Singleton
 public class WebUI extends Controller {
@@ -30,7 +31,7 @@ public class WebUI extends Controller {
 	
 	public Result drawBoard() {
 		if (controller != null) {
-			return ok(htmlBuilder.getHtml());
+			return ok(board.render("Moeraki Kemu", controller));
 		} else {
 			return ok("Game not started yet !!!"); // TODO: make it an error
 		}
