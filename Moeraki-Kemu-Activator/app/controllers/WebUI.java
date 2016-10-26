@@ -13,7 +13,6 @@ import de.htwg.se.moerakikemu.view.UserInterface;
 import de.htwg.se.moerakikemu.view.viewimpl.TextUI;
 import de.htwg.se.util.observer.IObserverSubject;
 import de.htwg.se.util.observer.ObserverObserver;
-import html.HtmlBoardBuilder;
 import play.mvc.*;
 import views.html.*;
 
@@ -21,7 +20,6 @@ import views.html.*;
 public class WebUI extends Controller {
 	
 	IController controller = null;
-	HtmlBoardBuilder htmlBuilder = null;
 	
 	public String newGame(final String player1Name, final String player2Name) {
 		// Create new game
@@ -42,7 +40,6 @@ public class WebUI extends Controller {
 		
 		IControllerPlayer playerController = new ControllerPlayer();
 		controller = new de.htwg.se.moerakikemu.controller.controllerimpl.Controller(8, playerController);
-		htmlBuilder = new HtmlBoardBuilder(controller);
 	
 		UserInterface[] interfaces = new UserInterface[2];
 		interfaces[0] = injector.getInstance(TextUI.class);
