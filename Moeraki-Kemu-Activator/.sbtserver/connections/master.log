@@ -1,7 +1,0 @@
-New log file opened at Wed Oct 19 10:26:05 CEST 2016 by 284@DESKTOP-FDK503S
-Taking next connection to: 50300
-New client attempting to connect on port: 50301-50300
-  Address = /172.20.134.222:50300
-This client on port 50301 has uuid 01ce0eed-f3cd-4dc8-beab-4753e60c51bd configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
-Connected Clients: activator-01ce0eed-f3cd-4dc8-beab-4753e60c51bd
-Taking next connection to: 50300

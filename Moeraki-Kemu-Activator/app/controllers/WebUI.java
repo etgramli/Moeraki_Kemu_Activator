@@ -26,7 +26,14 @@ public class WebUI extends Controller {
 		startGame();
 		return "";
 	}
-	
+
+    public Result index() {
+        return ok(index.render("Moeraki Kemu: Startseite"));
+    }
+    public Result getManual() {
+        return ok(manual.render());
+    }
+    
 	public Result drawBoard() {
 		if (controller != null) {
 			return ok(board.render("Moeraki Kemu", controller));

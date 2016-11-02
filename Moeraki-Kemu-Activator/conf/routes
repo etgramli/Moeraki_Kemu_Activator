@@ -3,12 +3,7 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index
-GET     /hello/:name                controllers.HomeController.hello(name:String)
-# An example controller showing how to use dependency injection
-GET     /count                      controllers.CountController.count
-# An example controller showing how to write asynchronous code
-GET     /message                    controllers.AsyncController.message
+GET     /                           controllers.WebUI.index
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
@@ -23,4 +18,4 @@ GET		/board						controllers.WebUI.drawBoard
 # Set dot
 # Win message
 # Manual
-#GET	/manual
+GET	    /manual                     controllers.WebUI.getManual
