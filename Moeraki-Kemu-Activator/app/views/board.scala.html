@@ -17,6 +17,11 @@
         <style>th, td {border: 1px solid black;}</style>
     </head>
     <body>
+        <noscript>
+            Sie haben JavaScript deaktiviert!
+            Es wird benötigt, um mit dem Spiel zu interagieren; deswegen bitte einschalten.
+        </noscript>
+        
         <table class="center">
             @for(i <- 0 until controller.getEdgeLength()) {
             <tr>
@@ -30,11 +35,21 @@
                     @if(controller.getPlayer1Name().equals(controller.getIsOccupiedByPlayer(i, j))) {
                     style="background:#FF3300"
                     }
-                    >&nbsp;</th>
+                    id="gameCell">
+                    &nbsp;</th>
                     
                 }
             </tr>
             }
         </table>
+        <script>
+            var list = document.getElementsByTagName("th");
+            function changeinnerhtml() {
+                this.innerHTML = "onclick'd";
+            }
+            for (i = 0, len = list.length; i < len; i++){
+                list[i].onclick = changeinnerhtml;
+            }
+        </script>
     </body>
 </html>
