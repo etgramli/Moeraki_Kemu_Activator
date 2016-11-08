@@ -23,12 +23,7 @@ public class WebUI extends Controller {
 	
 	private IController controller = null;
 	
-	public String newGame(final String player1Name, final String player2Name) {
-		// Create new game
-		startGame();
-		return "";
-	}
-
+	
     public Result index() {
         return ok(index.render("Moeraki Kemu: Startseite"));
     }
@@ -55,7 +50,7 @@ public class WebUI extends Controller {
 		((IObserverSubject) controller).attatch((ObserverObserver) tui);
 		tui.drawCurrentState();
 
-		return ok("Game created");
+		return redirect("/board");
 	}
 	
 	public Result setDot(final int x, final int y) {
