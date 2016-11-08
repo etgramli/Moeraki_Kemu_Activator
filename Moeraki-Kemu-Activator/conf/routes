@@ -15,6 +15,8 @@ GET		/start						controllers.WebUI.startGame
 # Draw board
 GET		/board						controllers.WebUI.drawBoard
 
+GET     /occ:x/:y                    controllers.WebUI.setDot(x: Int, y: Int)
+
 # Set dot
 # Win message
 # Manual

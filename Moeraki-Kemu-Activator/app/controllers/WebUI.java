@@ -2,6 +2,8 @@ package controllers;
 
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -55,4 +57,45 @@ public class WebUI extends Controller {
 
 		return ok("Game created");
 	}
+	
+	public Result setDot(final int x, final int y) {
+		System.out.println(x + "/" + y);
+	    final int returnValue = controller.occupy(x, y);
+	    // Build JSON
+	    return ok(getBoardAsJSON()); // Return JSON
+	}
+	
+	private static final String OPENING = "[";
+	private static final String CLOSING = "]";
+	private static final String DQUOTES = "\"";
+	private static final String NEWLINE = "\n";
+	
+	private String getBoardAsJSON() {
+		final int boardLength = controller.getEdgeLength();
+		
+		StringBuilder json = new StringBuilder();
+		json.append(OPENING).append(NEWLINE);
+		
+		for (int i = 0; i < boardLength; i++) {
+			json.append(OPENING);
+			for (int j = 0; j < boardLength; j++) {
+				json.append(DQUOTES).append(controller.getIsOccupiedByPlayer(i, j)).append(DQUOTES);
+				json.append(delimiter(boardLength, j));
+			}
+			json.append(CLOSING).append(NEWLINE);
+			json.append(delimiter(boardLength, i));
+		}
+		json.append(CLOSING);
+		
+		return json.toString();
+	}
+	
+	private String delimiter(final int edgeLength, final int pos) {
+		if (pos < edgeLength - 1) {
+			return ", ";
+		} else {
+			return StringUtils.EMPTY;
+		}
+	}
+	
 }
