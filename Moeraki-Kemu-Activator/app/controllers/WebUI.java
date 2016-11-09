@@ -35,7 +35,7 @@ public class WebUI extends Controller {
 		if (controller != null) {
 			return ok(board.render("Moeraki Kemu", controller));
 		} else {
-			return ok("Game not started yet !!!"); // TODO: make it an error
+			return notFound("Game not started yet !!!"); // TODO: make it an error
 		}
 	}
 	
@@ -54,7 +54,6 @@ public class WebUI extends Controller {
 	}
 	
 	public Result setDot(final int x, final int y) {
-		System.out.println(x + "/" + y);
 	    final int returnValue = controller.occupy(x, y);
 	    // Build JSON
 	    return ok(getBoardAsJSON()); // Return JSON
