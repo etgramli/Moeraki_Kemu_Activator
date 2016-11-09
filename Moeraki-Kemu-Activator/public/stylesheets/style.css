@@ -1,17 +1,17 @@
 h1, h2 {
   font-family: "Arial";
-  color: red;
+  color: white;
   text-align: center;
 }
 
 h3, h4 {
   font-family: "Arial";
-  color: red;
+  color: white;
   text-align: left;
 }
 
 html {
-  background: blue;
+  background: black;
 }
 
 p.Kurzbeschreibung,
