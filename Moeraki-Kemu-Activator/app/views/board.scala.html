@@ -21,7 +21,14 @@
             Sie haben JavaScript deaktiviert!
             Es wird benötigt, um mit dem Spiel zu interagieren; deswegen bitte einschalten.
         </noscript>
-        
+        <div class="container">
+            <div class="row">
+                <header class="col-md-12">
+                    <h1>Moeraki-Kemu</h1>
+                    <hr>
+                </header>
+            </div>
+        </div>
         <table class="center">
             @for(i <- 0 until controller.getEdgeLength()) {
             <tr>
@@ -48,7 +55,6 @@
 </html>
 
 @*
-- Must be post due to sending i/j corrdiantes with the clicking
 $('#saveAsDefaultButton').click(function(evt) {
         $('#errors').hide();
         $.ajax({
