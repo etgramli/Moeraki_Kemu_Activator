@@ -45,3 +45,23 @@
         <script src="assets/javascripts/gameCellClickListener.js"></script>
     </body>
 </html>
+
+@*
+$('#saveAsDefaultButton').click(function(evt) {
+        $('#errors').hide();
+        $.ajax({
+            type : 'POST',
+            url : "controllers.Application.saveDefaultPhoneForUser",
+            data : $('#controlledPhone option:selected').text(),
+            dataType : "text",
+            success : function(data) {
+                //setError('Call succedded');
+                //$('#test1').attr("src", data)
+            },
+            error : function(data) {
+                setError('Make call failed');
+            }
+        });
+        return false;
+    });
+*@

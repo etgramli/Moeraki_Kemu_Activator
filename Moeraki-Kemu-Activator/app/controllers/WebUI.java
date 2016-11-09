@@ -86,11 +86,7 @@ public class WebUI extends Controller {
 	}
 	
 	private String delimiter(final int edgeLength, final int pos) {
-		if (pos < edgeLength - 1) {
-			return ", ";
-		} else {
-			return StringUtils.EMPTY;
-		}
+		return pos < edgeLength - 1 ? ", " : StringUtils.EMPTY;
 	}
 	
 }
