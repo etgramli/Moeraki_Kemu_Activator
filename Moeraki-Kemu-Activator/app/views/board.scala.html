@@ -26,7 +26,8 @@
             @for(i <- 0 until controller.getEdgeLength()) {
             <tr>
                 @for(j <- 0 until controller.getEdgeLength()) {
-                <th @if("StartDot".equals(controller.getIsOccupiedByPlayer(i, j))) {
+                <th class="@i/@j"
+                @if("StartDot".equals(controller.getIsOccupiedByPlayer(i, j))) {
                     style="background:#000000"
                     }
                     @if(controller.getPlayer1Name().equals(controller.getIsOccupiedByPlayer(i, j))) {
