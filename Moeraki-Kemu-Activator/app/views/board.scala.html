@@ -26,8 +26,7 @@
             @for(i <- 0 until controller.getEdgeLength()) {
             <tr>
                 @for(j <- 0 until controller.getEdgeLength()) {
-                <th class="@i/@j"
-                @if("StartDot".equals(controller.getIsOccupiedByPlayer(i, j))) {
+                <th @if("StartDot".equals(controller.getIsOccupiedByPlayer(i, j))) {
                     style="background:#000000"
                     }
                     @if(controller.getPlayer1Name().equals(controller.getIsOccupiedByPlayer(i, j))) {
@@ -49,7 +48,7 @@
 
 @*
 - Must be post due to sending i/j corrdiantes with the clicking
-$('#saveAsDefaultButton').click(function(evt) {
+$('#gameCell').click(function(evt) {
         $('#errors').hide();
         $.ajax({
             type : 'POST',

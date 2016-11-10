@@ -16,6 +16,7 @@ import de.htwg.se.moerakikemu.view.viewimpl.TextUI;
 import de.htwg.se.util.observer.IObserverSubject;
 import de.htwg.se.util.observer.ObserverObserver;
 import play.mvc.*;
+import services.AjaxHelper;
 import views.html.*;
 
 @Singleton
@@ -61,7 +62,6 @@ public class WebUI extends Controller {
 	
 	private static final String OPENING = "[";
 	private static final String CLOSING = "]";
-	private static final String DQUOTES = "\"";
 	private static final String NEWLINE = "\n";
 	
 	private String getBoardAsJSON() {
@@ -73,7 +73,7 @@ public class WebUI extends Controller {
 		for (int i = 0; i < boardLength; i++) {
 			json.append(OPENING);
 			for (int j = 0; j < boardLength; j++) {
-				json.append(DQUOTES).append(controller.getIsOccupiedByPlayer(i, j)).append(DQUOTES);
+				json.append(AjaxHelper.JsonEscapeValue(controller.getIsOccupiedByPlayer(i, j)));
 				json.append(delimiter(boardLength, j));
 			}
 			json.append(CLOSING).append(NEWLINE);
@@ -85,7 +85,7 @@ public class WebUI extends Controller {
 	}
 	
 	private String delimiter(final int edgeLength, final int pos) {
-		return pos < edgeLength - 1 ? ", " : StringUtils.EMPTY;
+		return pos < edgeLength - 1 ? AjaxHelper.JSONARRAYDELIMITER : StringUtils.EMPTY;
 	}
 	
 }
