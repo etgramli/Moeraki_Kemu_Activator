@@ -54,6 +54,11 @@ public class WebUI extends Controller {
 		return redirect("/board");
 	}
 	
+	public Result setDot(final String coordinates) {
+		int []ij = AjaxHelper.splitXY(coordinates);
+		return setDot(ij[0], ij[1]);
+	}
+	
 	public Result setDot(final int x, final int y) {
 	    final int returnValue = controller.occupy(x, y);
 	    // Build JSON

@@ -29,6 +29,10 @@
                 </header>
             </div>
         </div>
+        <div>
+            Returned:
+            <span id="test1"></span>
+        </div>
         <table class="center">
             @for(i <- 0 until controller.getEdgeLength()) {
             <tr>
@@ -50,26 +54,23 @@
             }
         </table>
         <script src="assets/javascripts/gameCellClickListener.js"></script>
+        <script>
+            $('#gameCell').click(function(evt) {
+                $.ajax({
+                    type : 'POST',
+                    url : "controllers.WebUI.setDot",
+                    data : $(this).attr("class"),
+                    dataType : "text",
+                    success : function(data) {
+                        $('#test1').attr("src", data);
+                        $('#test1').text('Succeeded');
+                    },
+                    error : function(data) {
+                        $('#test1').text('Failed');
+                    }
+                });
+                return false;
+            });
+        </script>
     </body>
 </html>
-
-@*
-- Must be post due to sending i/j corrdiantes with the clicking
-$('#gameCell').click(function(evt) {
-        $('#errors').hide();
-        $.ajax({
-            type : 'POST',
-            url : "controllers.WebUI.setDot",
-            data : $(this).text(),
-            dataType : "text",
-            success : function(data) {
-                //setError('Call succedded');
-                //$('#test1').attr("src", data)
-            },
-            error : function(data) {
-                setError('Make call failed');
-            }
-        });
-        return false;
-    });
-*@
