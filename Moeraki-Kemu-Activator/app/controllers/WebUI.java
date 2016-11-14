@@ -60,9 +60,11 @@ public class WebUI extends Controller {
 	}
 	
 	public Result setDot(final int x, final int y) {
-	    final int returnValue = controller.occupy(x, y);
+	    final int returnValue = controller.occupy(x, y); // Can be used to send a message if successful or not
 	    // Build JSON
-	    return ok(getBoardAsJSON()); // Return JSON
+	    StringBuilder json = new StringBuilder(); // Maybe surrounding JSON object
+	    json.append(getBoardAsJSON());
+	    return ok(json.toString());
 	}
 	
 	private static final String OPENING = "[";

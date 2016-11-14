@@ -13,7 +13,7 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-        <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <style>th, td {border: 1px solid black;}</style>
     </head>
     <body>
@@ -29,9 +29,9 @@
                 </header>
             </div>
         </div>
-        <div>
+        <div class="test">
             Returned:
-            <span id="test1"></span>
+            <div id="test"></div>
         </div>
         <table class="center">
             @for(i <- 0 until controller.getEdgeLength()) {
@@ -46,8 +46,8 @@
                     @if(controller.getPlayer1Name().equals(controller.getIsOccupiedByPlayer(i, j))) {
                     style="background:#FF3300"
                     }
-                    id="gameCell"
-                    class="@i/@j">
+                    class="gameCell"
+                    id="@i/@j">
                         &nbsp;</th>
                 }
             </tr>
@@ -55,22 +55,29 @@
         </table>
         <script src="assets/javascripts/gameCellClickListener.js"></script>
         <script>
-            $('#gameCell').click(function(evt) {
+        $(document).ready(function() {
+            $('.gameCell').click(function(evt) {
+                $('#test').html("Succeeded " + $(this).attr('id'));
+            })
+        });
+        </script>
+    </body>
+</html>
+@*
+$('#gameCell').click(function(evt) {
                 $.ajax({
                     type : 'POST',
                     url : "controllers.WebUI.setDot",
                     data : $(this).attr("class"),
                     dataType : "text",
                     success : function(data) {
-                        $('#test1').attr("src", data);
-                        $('#test1').text('Succeeded');
+                        $('#test').html("Succeeded $(this).attr('class')");
                     },
                     error : function(data) {
-                        $('#test1').text('Failed');
+                        $('#test').html("Failed " + data);
                     }
                 });
                 return false;
             });
-        </script>
-    </body>
-</html>
+        });
+*@
