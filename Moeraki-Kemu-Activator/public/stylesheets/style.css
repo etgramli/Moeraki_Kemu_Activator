@@ -29,3 +29,15 @@ ul.Spielende {
   color: #BDB76B;
   text-align: left;
 }
+
+#navigationbar {
+    text-align: center;
+    font-family: Tahoma, sans-serif;
+    word-spacing: 0.9EM;
+    background-color: #2F4F4F;
+}
+
+.container .row .col-md-12 .navbar-brand {
+    text-decoration: none;
+    color: #D3D3D3;
+}
