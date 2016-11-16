@@ -12,7 +12,7 @@ public class AjaxHelper {
 	 * @return An array of int with the length of 2.
 	 */
 	public static final int[] splitXY(final String param) {
-	    final int idx = param.indexOf("/");
+	    final int idx = param.indexOf("-");
 	    final int i = Integer.valueOf(param.substring(0, idx - 1));
 	    final int j = Integer.valueOf(param.substring(idx + 1));
 	    return new int[]{i, j};

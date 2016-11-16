@@ -16,7 +16,7 @@ GET		/start						controllers.WebUI.startGame
 GET		/board						controllers.WebUI.drawBoard
 
 #GET     /occ:x/:y                   controllers.WebUI.setDot(x: Int, y: Int)
-POST    /occ:coordinates            controllers.WebUI.setDot(coordinates: String)
+POST    /occ                        controllers.WebUI.setDot()
 
 # Set dot
 # Win message
