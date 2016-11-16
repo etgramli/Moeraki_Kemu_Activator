@@ -1,17 +1,17 @@
 h1, h2 {
   font-family: "Arial";
-  color: white;
+  color: #BDB76B;
   text-align: center;
 }
 
 h3, h4 {
   font-family: "Arial";
-  color: white;
+  color: #BDB76B;
   text-align: left;
 }
 
 html {
-  background: black;
+  background: #A0522D;
 }
 
 p.Kurzbeschreibung,
@@ -26,6 +26,6 @@ ul.Ausgangssituation,
 ol.Spielverlauf,
 p.Spielende,
 ul.Spielende {
-  color: white;
+  color: #BDB76B;
   text-align: left;
 }
