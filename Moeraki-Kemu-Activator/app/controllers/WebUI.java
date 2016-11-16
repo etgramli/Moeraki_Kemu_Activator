@@ -7,12 +7,15 @@ import org.apache.commons.lang3.StringUtils;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import de.htwg.se.moerakikemu.controller.ControllerModuleWithController;
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.controller.controllerimpl.ControllerPlayer;
 import de.htwg.se.moerakikemu.view.UserInterface;
 import de.htwg.se.moerakikemu.view.viewimpl.TextUI;
+import de.htwg.se.moerakikemu.view.viewimpl.WebInterface;
 import de.htwg.se.util.observer.IObserverSubject;
 import de.htwg.se.util.observer.ObserverObserver;
 import play.mvc.*;
@@ -23,6 +26,7 @@ import views.html.*;
 public class WebUI extends Controller {
 	
 	private IController controller = null;
+	private WebInterface webInterface = null;
 	
 	
     public Result index() {
@@ -45,6 +49,7 @@ public class WebUI extends Controller {
 		
 		IControllerPlayer playerController = new ControllerPlayer();
 		controller = new de.htwg.se.moerakikemu.controller.controllerimpl.Controller(8, playerController);
+		webInterface = new WebInterface(controller);
 	
 		UserInterface tui = injector.getInstance(TextUI.class);
 
@@ -53,46 +58,25 @@ public class WebUI extends Controller {
 
 		return redirect("/board");
 	}
-	
-	public Result setDot(final String coordinates) {
-		int []ij = AjaxHelper.splitXY(coordinates);
-		return setDot(ij[0], ij[1]);
-	}
-	
-	public Result setDot(final int x, final int y) {
-	    final int returnValue = controller.occupy(x, y); // Can be used to send a message if successful or not
-	    // Build JSON
-	    StringBuilder json = new StringBuilder(); // Maybe surrounding JSON object
-	    json.append(getBoardAsJSON());
-	    return ok(json.toString());
-	}
-	
-	private static final String OPENING = "[";
-	private static final String CLOSING = "]";
-	private static final String NEWLINE = "\n";
-	
-	private String getBoardAsJSON() {
-		final int boardLength = controller.getEdgeLength();
+
+	@BodyParser.Of(BodyParser.Json.class)
+	public Result setDot() {
+		JsonNode json = request().body().asJson();
 		
-		StringBuilder json = new StringBuilder();
-		json.append(OPENING).append(NEWLINE);
+		System.out.println("Text got from POST: " + json.asText());
 		
-		for (int i = 0; i < boardLength; i++) {
-			json.append(OPENING);
-			for (int j = 0; j < boardLength; j++) {
-				json.append(AjaxHelper.JsonEscapeValue(controller.getIsOccupiedByPlayer(i, j)));
-				json.append(delimiter(boardLength, j));
-			}
-			json.append(CLOSING).append(NEWLINE);
-			json.append(delimiter(boardLength, i));
-		}
-		json.append(CLOSING);
+		int []ij = AjaxHelper.splitXY(json.asText());
 		
-		return json.toString();
+		System.out.println("Coordinates: (" + ij[0] + "/" + ij[1] + ")");
+		
+		
+		return occupyAndGetBoard(ij[0], ij[1]);
 	}
 	
-	private String delimiter(final int edgeLength, final int pos) {
-		return pos < edgeLength - 1 ? AjaxHelper.JSONARRAYDELIMITER : StringUtils.EMPTY;
+	private Result occupyAndGetBoard(final int x, final int y) {
+		final int retVal = controller.occupy(x, y);
+		final String board = webInterface.getBoardAsJSON();
+		return ok(board);
 	}
-	
+
 }
