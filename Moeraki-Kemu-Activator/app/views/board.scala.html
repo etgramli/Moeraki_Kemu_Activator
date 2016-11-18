@@ -84,10 +84,10 @@
                     contentType: "text/json",
                     data : JSON.stringify($(this).attr("id")),
                     success : function(data) {
-                        $('#test').html("Succeeded " + JSON.parse(data));
+                        $('#test').html(data);
                     },
                     error : function(data) {
-                        $('#test').html("Failed " + JSON.parse(data));
+                        $('#test').html(data);
                     }
                 });
                 return false;
