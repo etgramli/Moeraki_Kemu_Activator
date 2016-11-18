@@ -13,7 +13,7 @@ public class AjaxHelper {
 	 */
 	public static final int[] splitXY(final String param) {
 	    final int idx = param.indexOf("-");
-	    final int i = Integer.valueOf(param.substring(0, idx - 1));
+	    final int i = Integer.valueOf(param.substring(0, idx));
 	    final int j = Integer.valueOf(param.substring(idx + 1));
 	    return new int[]{i, j};
 	}
