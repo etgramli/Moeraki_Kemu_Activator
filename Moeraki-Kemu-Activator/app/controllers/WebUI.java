@@ -62,21 +62,11 @@ public class WebUI extends Controller {
 	@BodyParser.Of(BodyParser.Json.class)
 	public Result setDot() {
 		JsonNode json = request().body().asJson();
+		final String jsonText = json.asText();
 		
-		System.out.println("Text got from POST: " + json.asText());
+		System.out.println("Text got from POST: " + jsonText);
 		
-		int []ij = AjaxHelper.splitXY(json.asText());
-		
-		System.out.println("Coordinates: (" + ij[0] + "/" + ij[1] + ")");
-		
-		
-		return occupyAndGetBoard(ij[0], ij[1]);
+		return ok(webInterface.occupyAndGetBoard(jsonText));
 	}
 	
-	private Result occupyAndGetBoard(final int x, final int y) {
-		final int retVal = controller.occupy(x, y);
-		final String board = webInterface.getBoardAsJSON();
-		return ok(board);
-	}
-
 }
