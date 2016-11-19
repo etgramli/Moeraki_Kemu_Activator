@@ -19,7 +19,6 @@ import de.htwg.se.moerakikemu.view.viewimpl.WebInterface;
 import de.htwg.se.util.observer.IObserverSubject;
 import de.htwg.se.util.observer.ObserverObserver;
 import play.mvc.*;
-import services.AjaxHelper;
 import views.html.*;
 
 @Singleton

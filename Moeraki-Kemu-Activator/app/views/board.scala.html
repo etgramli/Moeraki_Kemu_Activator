@@ -50,10 +50,6 @@
                 </header>
             </div>
         </div>
-        <div class="test">
-            Returned:
-            <div id="test"></div>
-        </div>
         <table class="center">
             @for(i <- 0 until controller.getEdgeLength()) {
             <tr>
@@ -84,10 +80,19 @@
                     contentType: "text/json",
                     data : JSON.stringify($(this).attr("id")),
                     success : function(data) {
-                        $('#test').html(data);
+                        var json = JSON.parse(data)
+                        var lines = json.lines;
+                        for (var i = 0; i < lines.length; i++) {
+                            var line = lines[i];
+                            var cells = line.cells
+                            for (var j = 0; j < cells.length; j++) {
+                                var cell = cells[j];
+                                $('#' + i + '-' + j).text(cell);
+                            }
+                        }
                     },
                     error : function(data) {
-                        $('#test').html(data);
+                        $('#test').html("Failure" + data);
                     }
                 });
                 return false;
