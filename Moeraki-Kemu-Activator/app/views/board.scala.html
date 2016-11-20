@@ -54,18 +54,9 @@
             @for(i <- 0 until controller.getEdgeLength()) {
             <tr>
                 @for(j <- 0 until controller.getEdgeLength()) {
-                <th @if("StartDot".equals(controller.getIsOccupiedByPlayer(i, j))) {
-                    style="background:#000000"
-                    }
-                    @if(controller.getPlayer1Name().equals(controller.getIsOccupiedByPlayer(i, j))) {
-                    style="background:#00FF11"
-                    }
-                    @if(controller.getPlayer1Name().equals(controller.getIsOccupiedByPlayer(i, j))) {
-                    style="background:#FF3300"
-                    }
-                    class="gameCell"
-                    id="@i-@j">
-                        &nbsp;</th>
+                <th class="gameCell" id="@i-@j">
+                    &nbsp;
+                </th>
                 }
             </tr>
             }
@@ -87,7 +78,13 @@
                             var cells = line.cells
                             for (var j = 0; j < cells.length; j++) {
                                 var cell = cells[j];
-                                $('#' + i + '-' + j).text(cell);
+                                if (cell == "StartDot") {
+                                    $('#' + i + '-' + j).css('background-color', '#000000');
+                                } else if (cell == "Spieler 1") {
+                                    $('#' + i + '-' + j).css('background-color', '#00FF11');
+                                } else if (cell == "Spieler 2") {
+                                    $('#' + i + '-' + j).css('background-color', '#FF3300');
+                                }
                             }
                         }
                     },
