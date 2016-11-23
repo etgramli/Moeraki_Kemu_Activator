@@ -22,3 +22,7 @@ POST    /occ                        controllers.WebUI.setDot()
 # Win message
 # Manual
 GET	    /manual                     controllers.WebUI.getManual
+
+
+
+# Route to websocket

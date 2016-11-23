@@ -62,5 +62,13 @@
             </tr>
             }
         </table>
+        <script>// Create new WebSocket
+            var mySocket = new WebSocket("ws://echo.websockets.org");
+            // Attach listeners
+            mySocket.onmessage = function(event) { alert("Der Server sagt: " + event.data); };
+            mySocket.onopen = function(event) {echo "Verbindung zum Server hergestellt."};
+            mySocket.onclose = function(event) {echo "Spiel beendet oder abgebrochen!"};
+            mySocket.onerror = function(event) {echo "Leider ist der Server nicht erreichbar!};
+            </script>
     </body>
 </html>
