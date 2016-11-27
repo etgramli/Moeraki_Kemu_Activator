@@ -8,4 +8,5 @@ public class LegacyWebSocketController {
 	public LegacyWebSocketController() {
 		ws = new StringWebSocket();
 	}
+	
 }

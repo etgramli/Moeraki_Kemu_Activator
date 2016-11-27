@@ -54,24 +54,26 @@
                 </header>
             </div>
         </div>
+        <div class="test">
+            Websocket:
+            <div id="socketTest"></div>
+        </div>
         <table class="center">
             @for(i <- 0 until controller.getEdgeLength()) {
             <tr>
                 @for(j <- 0 until controller.getEdgeLength()) {
-                <th class="gameCell" id="@i-@j">
-                    &nbsp;
-                </th>
+                <th class="gameCell" id="@i-@j">&nbsp;</th>
                 }
             </tr>
             }
         </table>
         <script>// Create new WebSocket
-            var mySocket = new WebSocket("ws://echo.websockets.org");
+            var mySocket = new WebSocket("ws://localhost:8080/");
             // Attach listeners
-            mySocket.onmessage = function(event) { alert("Der Server sagt: " + event.data); };
-            mySocket.onopen = function(event) {echo "Verbindung zum Server hergestellt."};
-            mySocket.onclose = function(event) {echo "Spiel beendet oder abgebrochen!"};
-            mySocket.onerror = function(event) {echo "Leider ist der Server nicht erreichbar!};
+            mySocket.onmessage = function(event) {$('#socketTest').text("Der Server sagt: " + event.data);};
+            mySocket.onopen = function(event) {$('#socketTest').text("Verbindung zum Server hergestellt.");};
+            mySocket.onclose = function(event) {$('#socketTest').text("Spiel beendet oder abgebrochen!");};
+            mySocket.onerror = function(event) {$('#socketTest').text("Leider ist der Server nicht erreichbar!");};
             </script>
     </body>
 </html>

@@ -1,5 +1,8 @@
 package controllers;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
@@ -66,6 +69,16 @@ public class WebUI extends Controller {
 		System.out.println("Text got from POST: " + jsonText);
 		
 		return ok(webInterface.occupyAndGetBoard(jsonText));
+	}
+	
+	
+	// Return Websocket for callbacks
+	public LegacyWebSocket<String> socket() {
+		return WebSocket.whenReady((in, out) -> {
+				in.onMessage(System.out::println);
+				in.onClose(() -> System.out.println("Disconnected!"));
+				out.write("Hello!");
+		});
 	}
 	
 }
