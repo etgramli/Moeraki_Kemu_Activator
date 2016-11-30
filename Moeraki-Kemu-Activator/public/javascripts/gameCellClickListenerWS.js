@@ -1,12 +1,16 @@
 var mySocket = new WebSocket("localhost:9000/WS");
 // Attach listeners
-mySocket.onmessage = function(event) {$('#socketTest').text("Der Server sagt: " + event.data);};
+mySocket.onmessage = function(event) {
+    $('#socketTest').text("Der Server sagt: " + event.data);
+    // refresh fields
+};
 mySocket.onopen = function(event) {$('#socketTest').text("Verbindung zum Server hergestellt.");};
 mySocket.onclose = function(event) {$('#socketTest').text("Spiel beendet oder abgebrochen!");};
-mySocket.onerror = function(event) {$('#socketTest').text("Leider ist der Server nicht erreichbar!");};
+mySocket.onerror = function(event) {alert("Leider ist ein Problem aufgetreten!");};
 
 $(document).ready(function() {
     $('.gameCell').click(function(evt) {
+        mySocket.send('setDotij')
         $.ajax({
             type : 'POST',
             url : "/occ",
