@@ -68,7 +68,7 @@
             }
         </table>
         <script>// Create new WebSocket
-            var mySocket = new WebSocket("ws://localhost:8080/");
+            var mySocket = new WebSocket("localhost:9000/WS");
             // Attach listeners
             mySocket.onmessage = function(event) {$('#socketTest').text("Der Server sagt: " + event.data);};
             mySocket.onopen = function(event) {$('#socketTest').text("Verbindung zum Server hergestellt.");};

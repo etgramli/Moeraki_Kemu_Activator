@@ -26,3 +26,4 @@ GET	    /manual                     controllers.WebUI.getManual
 
 
 # Route to websocket
+GET /ws                                controllers.WebUI.socket

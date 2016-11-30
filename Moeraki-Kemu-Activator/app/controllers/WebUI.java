@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.concurrent.CompletionStage;
 
 import javax.inject.Singleton;
 
@@ -9,6 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+
+import actors.GameActor;
+import akka.stream.javadsl.Flow;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -21,7 +25,11 @@ import de.htwg.se.moerakikemu.view.viewimpl.TextUI;
 import de.htwg.se.moerakikemu.view.viewimpl.WebInterface;
 import de.htwg.se.util.observer.IObserverSubject;
 import de.htwg.se.util.observer.ObserverObserver;
+import play.http.websocket.Message;
+import play.libs.F.Either;
+import play.*;
 import play.mvc.*;
+import play.mvc.Http.RequestHeader;
 import views.html.*;
 
 @Singleton
@@ -74,11 +82,7 @@ public class WebUI extends Controller {
 	
 	// Return Websocket for callbacks
 	public LegacyWebSocket<String> socket() {
-		return WebSocket.whenReady((in, out) -> {
-				in.onMessage(System.out::println);
-				in.onClose(() -> System.out.println("Disconnected!"));
-				out.write("Hello!");
-		});
+		return WebSocket.withActor(GameActor::props);
 	}
 	
 }
