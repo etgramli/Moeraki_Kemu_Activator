@@ -54,16 +54,19 @@
                 </header>
             </div>
         </div>
-        <table class="center">
-            @for(i <- 0 until controller.getEdgeLength()) {
-            <tr>
-                @for(j <- 0 until controller.getEdgeLength()) {
-                <th class="gameCell" id="@i-@j">
-                    &nbsp;
-                </th>
+        <div class="table-responsive">
+            <table class="center">
+                @for(i <- 0 until controller.getEdgeLength()) {
+                <tr>
+                    @for(j <- 0 until controller.getEdgeLength()) {
+                        <th class="gameCell" id="@i-@j">
+                        &nbsp;
+                        </th>
+                    }
+                </tr>
                 }
-            </tr>
-            }
-        </table>
+            </table>
+        </div>
+        
     </body>
 </html>
