@@ -17,7 +17,11 @@ import de.htwg.se.util.observer.ObserverObserver;
 
 public class GameActor extends UntypedActor {
 	
-	private IController controller;
+	private static String SET_COMMAND = "setDot";
+	private static int SET_COMMAND_LENGTH = SET_COMMAND.length();
+	
+	private IController controller = null;
+	private WebInterface webinterface = null;
 	
 	public static Props props(ActorRef out) {
 	    return Props.create(GameActor.class, out);
@@ -31,7 +35,8 @@ public class GameActor extends UntypedActor {
 		
 		IControllerPlayer playerController = new ControllerPlayer();
 		controller = new de.htwg.se.moerakikemu.controller.controllerimpl.Controller(8, playerController);
-	
+		webinterface = new WebInterface(controller);
+		
 		UserInterface tui = injector.getInstance(TextUI.class);
 
 		((IObserverSubject) controller).attatch((ObserverObserver) tui);
@@ -39,8 +44,14 @@ public class GameActor extends UntypedActor {
 	}
 	
 	@Override
-	public void onReceive(Object arg0) throws Throwable {
-		// TODO Auto-generated method stub
+	public void onReceive(Object msg) throws Throwable {
+		if (msg instanceof String) {
+			final String msgString = (String) msg;
+			if (msgString.startsWith(SET_COMMAND) && msgString.length() > SET_COMMAND_LENGTH) {
+				webinterface.occupyAndGetBoard(msgString.substring(SET_COMMAND_LENGTH));
+			}
+		}
+		out.tell(webinterface.getBoardAsJSON(), self());
 	}
-
+	
 }

@@ -55,31 +55,21 @@
             </div>
         </div>
         <div class="table-responsive">
+            <div class="test">
+                Websocket:
+                <div id="socketTest"></div>
+            </div>
             <table class="center">
-                @for(i <- 0 until controller.getEdgeLength()) {
-                <tr>
-                    @for(j <- 0 until controller.getEdgeLength()) {
-                        <th class="gameCell" id="@i-@j">
-                        &nbsp;
-                        </th>
-                    }
-                </tr>
-                }
-        <div class="test">
-            Websocket:
-            <div id="socketTest"></div>
-        </div>
-        <table class="center">
             @for(i <- 0 until controller.getEdgeLength()) {
             <tr>
                 @for(j <- 0 until controller.getEdgeLength()) {
                 <th class="gameCell" id="@i-@j">&nbsp;</th>
                 }
+            </tr>
+            }
             </table>
         </div>
         
-            </tr>
-            }
         </table>
         <script>// Create new WebSocket
             var mySocket = new WebSocket("localhost:9000/WS");

@@ -72,11 +72,7 @@ public class WebUI extends Controller {
 	@BodyParser.Of(BodyParser.Json.class)
 	public Result setDot() {
 		JsonNode json = request().body().asJson();
-		final String jsonText = json.asText();
-		
-		System.out.println("Text got from POST: " + jsonText);
-		
-		return ok(webInterface.occupyAndGetBoard(jsonText));
+		return ok(webInterface.occupyAndGetBoard(json.asText()));
 	}
 	
 	
