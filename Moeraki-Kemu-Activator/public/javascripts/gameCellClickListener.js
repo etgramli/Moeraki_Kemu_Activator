@@ -24,7 +24,7 @@ $(document).ready(function() {
                         }
                     },
                     error : function(data) {
-                        $('#test').html("Failure" + data);
+                        alert("Server did not respond!");
                     }
                 });
                 return false;
