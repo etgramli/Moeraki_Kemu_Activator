@@ -1,5 +1,7 @@
 package actors;
 
+import java.util.Random;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -52,6 +54,13 @@ public class GameActor extends UntypedActor {
 			}
 		}
 		out.tell(webinterface.getBoardAsJSON(), self());
+	}
+
+	void endGame() {
+		if (new Random().nextBoolean()) {
+			System.out.println("Ostereier suchen...");
+		}
+		self().tell(PoisonPill.getInstance(), self());
 	}
 	
 }

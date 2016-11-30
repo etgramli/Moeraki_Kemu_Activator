@@ -18,6 +18,7 @@
         <script src="@routes.Assets.versioned("bootstrap-3.3.7-dist/js/bootstrap.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("bootstrap-3.3.7-dist/js/bootstrap.min.js")" type="text/javascript"></script>
         <script src="assets/javascripts/gameCellClickListener.js"></script>
+        <script src="assets/javascripts/gameCellListenerOverWebSocket.js"></script>
         <style>th, td {border: 1px solid black;}</style>
     </head>
     <body>
@@ -71,13 +72,5 @@
         </div>
         
         </table>
-        <script>// Create new WebSocket
-            var mySocket = new WebSocket("localhost:9000/WS");
-            // Attach listeners
-            mySocket.onmessage = function(event) {$('#socketTest').text("Der Server sagt: " + event.data);};
-            mySocket.onopen = function(event) {$('#socketTest').text("Verbindung zum Server hergestellt.");};
-            mySocket.onclose = function(event) {$('#socketTest').text("Spiel beendet oder abgebrochen!");};
-            mySocket.onerror = function(event) {$('#socketTest').text("Leider ist der Server nicht erreichbar!");};
-            </script>
     </body>
 </html>
