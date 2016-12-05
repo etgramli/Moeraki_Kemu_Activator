@@ -4,26 +4,22 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.WebUI.index
+# Manual
+GET	    /manual                     controllers.WebUI.getManual
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 
-
 # New Game
-GET		/start						controllers.WebUI.startGame
-# Draw board
-GET		/board						controllers.WebUI.drawBoard
+#GET		/start						controllers.WebUI.startGame # Old route for AJAX
+GET		/start						controllers.WebUI.plainBoard
 
-#GET     /occ:x/:y                   controllers.WebUI.setDot(x: Int, y: Int)
-POST    /occ                        controllers.WebUI.setDot()
+# Draw board
+#GET		/board						controllers.WebUI.drawBoard # Old route for AJAX
 
 # Set dot
-# Win message
-# Manual
-GET	    /manual                     controllers.WebUI.getManual
-
-
+#POST    /occ                        controllers.WebUI.setDot() # Old route for AJAX
 
 # Route to websocket
 GET /ws                                controllers.WebUI.socket
