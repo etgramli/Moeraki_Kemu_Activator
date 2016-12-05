@@ -13,6 +13,8 @@ mySocket.onerror = function(event) {alert("Leider ist ein Problem aufgetreten!")
 mySocket.onmessage = function(event) {
     if (event.data.substring(0,7) == 'winner(') {
         alert("Der Gewinner ist " + event.substring(8, 17));
+    } else if (event.data.substring(0,6) == 'alert(') {
+        alert(event.data.substring(7, event.data.length - 1));
     } else {
 	// refresh fields
     var json = JSON.parse(event.data)
