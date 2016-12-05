@@ -13,6 +13,7 @@ import de.htwg.se.moerakikemu.controller.controllerimpl.Controller;
 import de.htwg.se.moerakikemu.controller.controllerimpl.ControllerPlayer;
 import de.htwg.se.moerakikemu.view.UserInterface;
 import de.htwg.se.moerakikemu.view.viewimpl.TextUI;
+import de.htwg.se.moerakikemu.view.viewimpl.gui.GUI;
 import de.htwg.se.moerakikemu.view.viewimpl.WebInterface;
 import de.htwg.se.util.observer.IObserverSubject;
 import de.htwg.se.util.observer.ObserverObserver;
@@ -23,6 +24,7 @@ public class GameActor extends UntypedActor {
 	private static int SET_COMMAND_LENGTH = SET_COMMAND.length();
 	
 	private IController controller = null;
+	private IControllerPlayer playerController = null;
 	private WebInterface webinterface = null;
 	
 	public static Props props(ActorRef out) {
@@ -35,13 +37,15 @@ public class GameActor extends UntypedActor {
 	    this.out = out;
 		Injector injector = Guice.createInjector(new ControllerModuleWithController());
 		
-		IControllerPlayer playerController = new ControllerPlayer();
+		playerController = new ControllerPlayer();
 		controller = new de.htwg.se.moerakikemu.controller.controllerimpl.Controller(8, playerController);
 		webinterface = new WebInterface(controller);
 		
 		UserInterface tui = injector.getInstance(TextUI.class);
+		UserInterface gui = new GUI(controller, playerController);
 
 		((IObserverSubject) controller).attatch((ObserverObserver) tui);
+		((IObserverSubject) controller).attatch((ObserverObserver) gui);
 		tui.drawCurrentState();
 	}
 	
@@ -53,6 +57,9 @@ public class GameActor extends UntypedActor {
 			if (msgString.startsWith(SET_COMMAND) && msgString.length() > SET_COMMAND_LENGTH) {
 				webinterface.occupyAndGetBoard(msgString.substring(SET_COMMAND_LENGTH + 1, msgString.length()-1));
 			}
+		}
+		if (controller.testIfWinnerExists()) {
+			out.tell("winner(" + controller.getWinner() + ")", self());
 		}
 		out.tell(webinterface.getBoardAsJSON(), self());
 	}

@@ -11,6 +11,9 @@ mySocket.onopen = function(event) {$('#socketTest').text("Verbindung zum Server 
 mySocket.onclose = function(event) {$('#socketTest').text("Spiel beendet oder abgebrochen!");};
 mySocket.onerror = function(event) {alert("Leider ist ein Problem aufgetreten!");};
 mySocket.onmessage = function(event) {
+    if (event.data.substring(0,7) == 'winner(') {
+        alert("Der Gewinner ist " + event.substring(8, 17));
+    } else {
 	// refresh fields
     var json = JSON.parse(event.data)
     var lines = json.lines;
@@ -27,5 +30,6 @@ mySocket.onmessage = function(event) {
                 $('#' + i + '-' + j).css('background-color', '#FF3300');
             }
         }
+    }
     }
 };
