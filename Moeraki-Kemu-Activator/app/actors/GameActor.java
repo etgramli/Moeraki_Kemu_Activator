@@ -49,8 +49,9 @@ public class GameActor extends UntypedActor {
 	public void onReceive(Object msg) throws Throwable {
 		if (msg instanceof String) {
 			final String msgString = (String) msg;
+			System.out.println("Actor got message over Websocket: " + msgString);
 			if (msgString.startsWith(SET_COMMAND) && msgString.length() > SET_COMMAND_LENGTH) {
-				webinterface.occupyAndGetBoard(msgString.substring(SET_COMMAND_LENGTH));
+				webinterface.occupyAndGetBoard(msgString.substring(SET_COMMAND_LENGTH + 1, msgString.length()-1));
 			}
 		}
 		out.tell(webinterface.getBoardAsJSON(), self());

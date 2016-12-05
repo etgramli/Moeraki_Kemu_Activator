@@ -11,9 +11,8 @@ mySocket.onopen = function(event) {$('#socketTest').text("Verbindung zum Server 
 mySocket.onclose = function(event) {$('#socketTest').text("Spiel beendet oder abgebrochen!");};
 mySocket.onerror = function(event) {alert("Leider ist ein Problem aufgetreten!");};
 mySocket.onmessage = function(event) {
-    $('#socketTest').text("Der Server sagt: " + event.data);
 	// refresh fields
-    var json = JSON.parse(data)
+    var json = JSON.parse(event.data)
     var lines = json.lines;
     for (var i = 0; i < lines.length; i++) {
         var line = lines[i];
