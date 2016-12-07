@@ -16,7 +16,6 @@ import de.htwg.se.moerakikemu.controller.controllerimpl.ControllerPlayer;
 import de.htwg.se.moerakikemu.view.UserInterface;
 import de.htwg.se.moerakikemu.view.viewimpl.TextUI;
 import de.htwg.se.moerakikemu.view.viewimpl.gui.GUI;
-import de.htwg.se.moerakikemu.view.viewimpl.WebInterface;
 import de.htwg.se.util.observer.IObserverSubject;
 import de.htwg.se.util.observer.ObserverObserver;
 
@@ -39,7 +38,6 @@ public class GameActor extends UntypedActor implements UserInterface, ObserverOb
 	
 	private IController controller = null;
 	private IControllerPlayer playerController = null;
-	private WebInterface webinterface = null;
 	
 	public static Props props(ActorRef out) {
 	    return Props.create(GameActor.class, out);
@@ -53,7 +51,6 @@ public class GameActor extends UntypedActor implements UserInterface, ObserverOb
 		
 		playerController = new ControllerPlayer();
 		controller = new de.htwg.se.moerakikemu.controller.controllerimpl.Controller(8, playerController);
-		webinterface = new WebInterface(controller);
 		
 		List<UserInterface> interfaces = new ArrayList<>(3);
 		interfaces.add(injector.getInstance(TextUI.class));
@@ -69,15 +66,12 @@ public class GameActor extends UntypedActor implements UserInterface, ObserverOb
 	public void onReceive(Object msg) throws Throwable {
 		if (msg instanceof String) {
 			final String msgString = (String) msg;
-			System.out.println("Actor got message over Websocket: " + msgString);
+			
 			if (msgString.startsWith(SET_COMMAND) && msgString.length() > SET_COMMAND_LENGTH) {
-				webinterface.occupyAndGetBoard(msgString.substring(SET_COMMAND_LENGTH + 1, msgString.length()-1));
+				occupyAndGetBoard(msgString.substring(SET_COMMAND_LENGTH + 1, msgString.length()-1));
 			}
 		}
-		if (controller.testIfWinnerExists()) {
-			out.tell("winner(" + controller.getWinner() + ")", self());
-		}
-		out.tell(webinterface.getBoardAsJSON(), self());
+		out.tell(getBoardAsJSON(), self());
 	}
 
 	void endGame() {
@@ -118,7 +112,7 @@ public class GameActor extends UntypedActor implements UserInterface, ObserverOb
 
 	@Override
 	public void update() {
-		out.tell(webinterface.getBoardAsJSON(), self());
+		out.tell(getBoardAsJSON(), self());
 		
 	}
 
