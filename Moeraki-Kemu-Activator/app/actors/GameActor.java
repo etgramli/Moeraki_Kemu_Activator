@@ -29,12 +29,16 @@ public class GameActor extends UntypedActor implements UserInterface, ObserverOb
     private static final String DELIMITER = ", ";
     private static final String EMPTYSTRING = "";
     private static final String DQUOTES = "\"";
+    private static final String PLAYER1 = "player1";
+    private static final String PLAYER2 = "player2";
+    private static final String PLAYER1POINTS = "player1Points";
+    private static final String PLAYER2POINTS = "player2Points";
     private static final String LINES = "lines";
     private static final String CELLS = "cells";
     
-    
 	private static String SET_COMMAND = "setDot";
 	private static int SET_COMMAND_LENGTH = SET_COMMAND.length();
+	
 	
 	private IController controller = null;
 	private IControllerPlayer playerController = null;
@@ -63,7 +67,7 @@ public class GameActor extends UntypedActor implements UserInterface, ObserverOb
 	}
 	
 	@Override
-	public void onReceive(Object msg) throws Throwable {
+	public void onReceive(Object msg) {
 		if (msg instanceof String) {
 			final String msgString = (String) msg;
 			
@@ -138,12 +142,32 @@ public class GameActor extends UntypedActor implements UserInterface, ObserverOb
 	    				  Integer.parseInt(param.substring(idx + 1))};
 	}
 	
+    private String getPlayer1AsJson() {
+    	return JsonEscapeValue(PLAYER1) + ":" + JsonEscapeValue(controller.getPlayer1Name());
+    }
+
+    private String getPlayer2AsJson() {
+    	return JsonEscapeValue(PLAYER2) + ":" + JsonEscapeValue(controller.getPlayer2Name());
+    }
+    
+    private String getPlayer1PointsAsJson() {
+    	return JsonEscapeValue(PLAYER1POINTS) + ":" + playerController.getPlayer1Points();
+    }
+    
+    private String getPlayer2PointsAsJson() {
+    	return JsonEscapeValue(PLAYER2POINTS) + ":" + playerController.getPlayer2Points();
+    }
+    
     public String getBoardAsJSON() {
-        final String linesObject = JsonEscapeValue(LINES) + ":";
         final int boardLength = controller.getEdgeLength();
 
         StringBuilder json = new StringBuilder(oOpening);
-        json.append(linesObject);
+        json.append(getPlayer1AsJson()).append(DELIMITER);
+        json.append(getPlayer2AsJson()).append(DELIMITER);
+        json.append(getPlayer1PointsAsJson()).append(DELIMITER);
+        json.append(getPlayer2PointsAsJson()).append(DELIMITER);
+        
+        json.append(JsonEscapeValue(LINES) + ":");
 
         json.append(aOPENING).append(NEWLINE);
 
