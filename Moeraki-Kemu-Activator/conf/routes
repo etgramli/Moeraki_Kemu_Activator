@@ -3,8 +3,7 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.WebUI.index
-# Manual
+GET     /                           controllers.WebUI.lobby
 GET	    /manual                     controllers.WebUI.getManual
 
 # Map static resources from the /public folder to the /assets URL path
@@ -23,3 +22,4 @@ GET		/start						controllers.WebUI.plainBoard
 
 # Route to websocket
 GET /ws                                controllers.WebUI.socket
+#GET /ws:id                                controllers.WebUI.gameSocket # Get socket for a specific game

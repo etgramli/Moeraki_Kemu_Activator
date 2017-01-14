@@ -21,10 +21,18 @@ import play.libs.F.Either;
 import play.*;
 import play.mvc.*;
 import play.mvc.Http.RequestHeader;
+
 import views.html.*;
+import actors.LobbyActor;
 
 @Singleton
 public class WebUI extends Controller {
+    
+    private LobbyActor lobbyActor = new LobbyActor();
+	
+	public Result lobby() {
+	    return ok(lobby.render(lobbyActor.getNumberOfGames()));
+	}
 	
     public Result index() {
         return ok(index.render("Moeraki Kemu: Startseite"));
@@ -38,7 +46,7 @@ public class WebUI extends Controller {
     
 	// Return Websocket for callbacks
 	public LegacyWebSocket<String> socket() {
-		return WebSocket.withActor(GameActor::props);
+		return null;//WebSocket.withActor(GameActor::props);
 	}
 	
 }

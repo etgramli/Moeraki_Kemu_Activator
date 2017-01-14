@@ -7,6 +7,7 @@ import java.util.Random;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
+import play.mvc.*;
 import akka.actor.*;
 import de.htwg.se.moerakikemu.controller.ControllerModuleWithController;
 import de.htwg.se.moerakikemu.controller.IController;
@@ -19,23 +20,14 @@ import de.htwg.se.moerakikemu.view.viewimpl.gui.GUI;
 import de.htwg.se.util.observer.IObserverSubject;
 import de.htwg.se.util.observer.ObserverObserver;
 
-public class GameActor extends UntypedActor implements UserInterface, ObserverObserver {
-	
-	private static String SET_COMMAND = "setDot";
-	private static int SET_COMMAND_LENGTH = SET_COMMAND.length();
-	
+public class GameActor {
 	
 	private IController controller = null;
 	private IControllerPlayer playerController = null;
+	private List<LegacyWebSocket<String>> websockets;
 	
-	public static Props props(ActorRef out) {
-	    return Props.create(GameActor.class, out);
-	}
-
-	private final ActorRef out;
-
-	public GameActor(ActorRef out) {
-	    this.out = out;
+	
+	public GameActor() {
 		Injector injector = Guice.createInjector(new ControllerModuleWithController());
 		
 		playerController = new ControllerPlayer();
@@ -44,85 +36,19 @@ public class GameActor extends UntypedActor implements UserInterface, ObserverOb
 		List<UserInterface> interfaces = new ArrayList<>(3);
 		interfaces.add(injector.getInstance(TextUI.class));
 		interfaces.add(new GUI(controller, playerController));
-		interfaces.add(this);
 		
-		for (UserInterface iface : interfaces) {
-			((IObserverSubject) controller).attatch((ObserverObserver) iface);
-		}
+		websockets = new ArrayList<LegacyWebSocket<String>>(2);
 	}
 	
-	@Override
-	public void onReceive(Object msg) {
-		if (msg instanceof String) {
-			final String msgString = (String) msg;
-			
-			if (msgString.startsWith(SET_COMMAND) && msgString.length() > SET_COMMAND_LENGTH) {
-				occupyAndGetBoard(msgString.substring(SET_COMMAND_LENGTH + 1, msgString.length()-1));
-			}
-		}
-		out.tell(JsonRenderer.getBoardAsJSON(controller, playerController), self());
+	public LegacyWebSocket<String> getWebSocket() {
+	    final int size = websockets.size();
+	    switch (size) {
+	        case 0:
+	        case 1:
+	            websockets.add(WebSocket.withActor(WebsocketEndpointActor::props));
+	            return websockets.get(size);
+	        default:
+	            return null;
+	    }
 	}
-
-	void endGame() {
-		if (new Random().nextBoolean()) {
-			System.out.println("Ostereier suchen...");
-		}
-		self().tell(PoisonPill.getInstance(), self());
-	}
-	
-	
-	
-	//////// Override methods from UserInterface and PbserverObserver ////////
-
-	@Override
-	public void addPoints(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void drawCurrentState() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void printMessage(String arg0) {
-		//
-	}
-
-	@Override
-	public void queryPlayerName() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void quit() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void update() {
-		out.tell(JsonRenderer.getBoardAsJSON(controller, playerController), self());
-		
-	}
-
-	
-	
-    public String occupyAndGetBoard(final String coordinates) {
-		int []ij = splitXY(coordinates);
-    	controller.occupy(ij[0], ij[1]);
-    	return JsonRenderer.getBoardAsJSON(controller, playerController);
-    }
-
-	/**
-	 * Takes a parameter (from AJAX call) and extracts the x and y coordinate.
-	 *
-	 * @param param String that must match the pattern [0-9]+/[0-9]*
-	 * @return An array of int with the length of 2.
-	 */
-	public static final int[] splitXY(final String param) {
-	    final int idx = param.indexOf("-");
-	    return new int[] {Integer.parseInt(param.substring(0, idx)), 
-	    				  Integer.parseInt(param.substring(idx + 1))};
-	}
-
 }
