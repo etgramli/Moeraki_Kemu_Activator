@@ -1,26 +1,10 @@
 package controllers;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.util.concurrent.CompletionStage;
-
 import javax.inject.Singleton;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-import actors.GameActor;
-import akka.stream.javadsl.Flow;
-
-import com.fasterxml.jackson.databind.JsonNode;
-
-import play.http.websocket.Message;
-import play.libs.F.Either;
-import play.*;
-import play.mvc.*;
-import play.mvc.Http.RequestHeader;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.LegacyWebSocket;
 
 import views.html.*;
 import actors.LobbyActor;
@@ -40,13 +24,12 @@ public class WebUI extends Controller {
     public Result getManual() {
         return ok(manual.render());
     }
-    public Result plainBoard() {
-        return ok(plainBoard.render("Moeraki Kemu"));
+    public Result plainBoard(final int gameIdx) {
+        return ok(plainBoard.render(gameIdx));
     }
     
-	// Return Websocket for callbacks
-	public LegacyWebSocket<String> socket() {
-		return null;//WebSocket.withActor(GameActor::props);
+	public LegacyWebSocket<String> socket(final int gameIdx) {
+		return lobbyActor.getSocket(gameIdx);
 	}
 	
 }

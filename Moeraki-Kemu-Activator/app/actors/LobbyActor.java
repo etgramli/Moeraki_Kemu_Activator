@@ -19,15 +19,16 @@ public class LobbyActor {
     }
     
     public LegacyWebSocket<String> getSocket(final int idx) {
-        // if (idx < 0 || idx >= games.length())
-        // return games.get(idx). getSocket();
-        return null;
+        if (idx < 0 || idx >= games.size()) {
+            return null;
+        } else {
+            return games.get(idx).getWebSocket();
+        }
     }
     
     public int startGame() {
-        //games.append(new GameActor());
-        //return games.size() - 1;
-        return 0;
+        games.add(new GameActor());
+        return games.size() - 1;
     }
     
     public int getNumberOfGames() {
