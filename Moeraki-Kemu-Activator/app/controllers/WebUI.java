@@ -25,7 +25,14 @@ public class WebUI extends Controller {
         return ok(manual.render());
     }
     public Result plainBoard(final int gameIdx) {
-        return ok(plainBoard.render(gameIdx));
+        if (gameIdx < lobbyActor.getNumberOfGames() && gameIdx >= 0) {
+            return ok(plainBoard.render(gameIdx));
+        } else if (gameIdx == lobbyActor.getNumberOfGames()) {
+            lobbyActor.startGame();
+            return ok(plainBoard.render(gameIdx));
+        } else {
+            return ok(lobby.render(lobbyActor.getNumberOfGames()));
+        }
     }
     
 	public LegacyWebSocket<String> socket(final int gameIdx) {

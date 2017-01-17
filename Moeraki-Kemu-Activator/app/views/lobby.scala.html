@@ -10,7 +10,9 @@
 <html lang="en">
     <head></head>
     <body>
-    <button id="start">Neues Spiel starten</button>
+        <form method="get" action="/start@numberOfGames">
+            <button type="submit">Neues Spiel starten</button>
+        </form>
     @for(j <- 0 until numberOfGames) {
         <button id="numberOfGames">Spiel numberOfGames</button>
     }
