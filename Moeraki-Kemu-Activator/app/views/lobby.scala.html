@@ -14,7 +14,9 @@
             <button type="submit">Neues Spiel starten</button>
         </form>
     @for(j <- 0 until numberOfGames) {
-        <button id="numberOfGames">Spiel numberOfGames</button>
+        <form method="get" action="/start@j">
+            <button type="submit">Spiel @j</button>
+        </form>
     }
     </body>
 </html>
