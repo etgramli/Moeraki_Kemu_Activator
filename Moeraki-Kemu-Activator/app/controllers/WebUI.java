@@ -12,10 +12,9 @@ import actors.LobbyActor;
 @Singleton
 public class WebUI extends Controller {
     
-    private LobbyActor lobbyActor = new LobbyActor();
 	
 	public Result lobby() {
-	    return ok(lobby.render(lobbyActor.getNumberOfGames()));
+	    return ok(lobby.render(0));
 	}
 	
     public Result index() {
@@ -25,18 +24,13 @@ public class WebUI extends Controller {
         return ok(manual.render());
     }
     public Result plainBoard(final int gameIdx) {
-        if (gameIdx < lobbyActor.getNumberOfGames() && gameIdx >= 0) {
+        if (gameIdx >= 0) {
             return ok(plainBoard.render(gameIdx));
-        } else if (gameIdx == lobbyActor.getNumberOfGames()) {
-            lobbyActor.startGame();
+        } else if (true) {
             return ok(plainBoard.render(gameIdx));
         } else {
-            return ok(lobby.render(lobbyActor.getNumberOfGames()));
+            return ok(lobby.render(0));
         }
     }
     
-	public LegacyWebSocket<String> socket(final int gameIdx) {
-		return lobbyActor.getSocket(gameIdx);
-	}
-	
 }

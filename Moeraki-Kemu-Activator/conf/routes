@@ -22,4 +22,4 @@ GET		/start:id						controllers.WebUI.plainBoard(id: Integer)
 
 # Route to websocket
 #GET /ws                                controllers.WebUI.socket
-GET /ws:id                                controllers.WebUI.socket(id: Integer)
+#GET /ws:id                                controllers.WebUI.socket(id: Integer)

@@ -1,38 +1,24 @@
 package actors;
 
-import java.util.ArrayList;
+import akka.actor.*;
+
 import java.util.List;
+import java.util.ArrayList;
 
-import javax.inject.Singleton;
-import play.mvc.LegacyWebSocket;
-import play.mvc.WebSocket;
+public class LobbyActor extends UntypedActor {
 
+    public static Props props(ActorSystem actorSystem) {
+        return Props.create(LobbyActor.class, actorSystem);
+    }
 
-@Singleton
-public class LobbyActor {
-    /* Change GameActor to contain to contain only controllers,
-     * and return return 1 or 2 WebSocketActors on Request for each player.
-     */
-    private List<LegacyWebSocket<String>> games;
-    
-    public LobbyActor() {
-        games = new ArrayList<LegacyWebSocket<String>>();
+    private ActorSystem actorSystem;
+
+    private List<ActorRef> clients = new ArrayList<>();
+
+    public LobbyActor(ActorSystem actorSystem) {
+        this.actorSystem = actorSystem;
     }
-    
-    public LegacyWebSocket<String> getSocket(final int idx) {
-        if (idx < 0 || idx >= games.size()) {
-            return null;
-        } else {
-            return games.get(idx);
-        }
-    }
-    
-    public int startGame() {
-        games.add(WebSocket.withActor(GameActor::props));
-        return games.size() - 1;
-    }
-    
-    public int getNumberOfGames() {
-        return games.size();
+
+    public void onReceive(Object message) throws Exception {
     }
 }

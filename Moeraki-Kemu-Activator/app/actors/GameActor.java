@@ -20,22 +20,26 @@ import de.htwg.se.moerakikemu.view.viewimpl.gui.GUI;
 import de.htwg.se.util.observer.IObserverSubject;
 import de.htwg.se.util.observer.ObserverObserver;
 
+import actors.GameCommands.SetDotCommand;
+import actors.GameCommands.UpdateCommand;
+
 public class GameActor extends UntypedActor implements UserInterface, ObserverObserver {
-	private static String SET_COMMAND = "setDot";
-	private static int SET_COMMAND_LENGTH = SET_COMMAND.length();
 	
 	private IController controller = null;
 	private IControllerPlayer playerController = null;
 	
-    
-	public static Props props(ActorRef out) {
-	    return Props.create(GameActor.class, out);
-	}
 
-	private final ActorRef out;
+    public static Props props(ActorRef playerOne, ActorRef playerTwo) {
+        return Props.create(GameActor.class, playerOne, playerTwo);
+    }
+
+	private final ActorRef player1;
+	private final ActorRef player2;
 	
-	public GameActor(ActorRef out) {
-	    this.out = out;
+	public GameActor(ActorRef player1, ActorRef player2) {
+	    this.player1 = player1;
+	    this.player2 = player2;
+	    
 		Injector injector = Guice.createInjector(new ControllerModuleWithController());
 		
 		playerController = new ControllerPlayer();
@@ -53,14 +57,10 @@ public class GameActor extends UntypedActor implements UserInterface, ObserverOb
 	
 	@Override
 	public void onReceive(Object msg) {
-		if (msg instanceof String) {
-			final String msgString = (String) msg;
-			
-			if (msgString.startsWith(SET_COMMAND) && msgString.length() > SET_COMMAND_LENGTH) {
-				occupyAndGetBoard(msgString.substring(SET_COMMAND_LENGTH + 1, msgString.length()-1));
-			}
+		if (msg instanceof SetDotCommand) {
+			final SetDotCommand commandMsg = (SetDotCommand) msg;
+			occupyAndGetBoard(commandMsg.getCoors());
 		}
-		out.tell(JsonRenderer.getBoardAsJSON(controller, playerController), self());
 	}
 
 	@Override
@@ -90,7 +90,9 @@ public class GameActor extends UntypedActor implements UserInterface, ObserverOb
 
 	@Override
 	public void update() {
-		out.tell(JsonRenderer.getBoardAsJSON(controller, playerController), self());
+		final UpdateCommand newBoard = new UpdateCommand(JsonRenderer.getBoardAsJSON(controller, playerController));
+		player1.tell(newBoard, self());
+		player2.tell(newBoard, self());
 		
 	}
 
