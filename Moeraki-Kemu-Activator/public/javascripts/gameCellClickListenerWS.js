@@ -1,7 +1,5 @@
 $(document).ready(function() {
-    var gameIdx = $('#identifier').text();
-	console.log("Index vom Spiel: " + gameIdx);
-    var mySocket = new WebSocket('ws://localhost:9000/ws' + gameIdx);
+    var mySocket = new WebSocket('ws://localhost:9000/ws');
     mySocket.onopen    = function(event) {$('#socketTest').text("Verbindung zum Server hergestellt.");};
     mySocket.onclose   = function(event) {$('#socketTest').text("Spiel beendet oder abgebrochen!");};
     mySocket.onerror   = function(event) {alert("Leider ist ein Problem aufgetreten!");};

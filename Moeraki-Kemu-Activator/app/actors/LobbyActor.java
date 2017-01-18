@@ -20,5 +20,16 @@ public class LobbyActor extends UntypedActor {
     }
 
     public void onReceive(Object message) throws Exception {
+    	if (message instanceof GameCommands.JoinCommand) {
+    		clients.add(sender());
+    		if(clients.size() >= 2) {
+    			ActorRef player1 = clients.get(0);
+    			ActorRef player2 = clients.get(1);
+    			ActorRef game = actorSystem.actorOf(GameActor.props(player1, player2));
+    			GameCommands.StartGame newGame = new GameCommands.StartGame(game);
+    			player1.tell(newGame, self());
+    			player2.tell(newGame, self());
+    		}
+    	}
     }
 }

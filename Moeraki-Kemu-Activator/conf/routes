@@ -3,7 +3,7 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.WebUI.lobby
+GET     /                           controllers.WebUI.plainBoard
 GET	    /manual                     controllers.WebUI.getManual
 
 # Map static resources from the /public folder to the /assets URL path
@@ -12,7 +12,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 # New Game
 #GET		/start						controllers.WebUI.startGame # Old route for AJAX
-GET		/start:id						controllers.WebUI.plainBoard(id: Integer)
+GET		/start						controllers.WebUI.plainBoard
 
 # Draw board
 #GET		/board						controllers.WebUI.drawBoard # Old route for AJAX
@@ -21,5 +21,4 @@ GET		/start:id						controllers.WebUI.plainBoard(id: Integer)
 #POST    /occ                        controllers.WebUI.setDot() # Old route for AJAX
 
 # Route to websocket
-#GET /ws                                controllers.WebUI.socket
-#GET /ws:id                                controllers.WebUI.socket(id: Integer)
+GET /ws                                controllers.WebUI.socket

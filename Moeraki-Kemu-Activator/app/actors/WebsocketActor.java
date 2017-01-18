@@ -1,6 +1,7 @@
 package actors;
 
 import akka.actor.*;
+import controllers.WebUI;
 import controllers.WebsocketController;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,7 +24,8 @@ public class WebsocketActor extends UntypedActor {
 	
 	public WebsocketActor(ActorRef out) {
 	    this.out = out;
-        this.lobby = WebsocketController.lobby;
+        this.lobby = WebUI.lobby;
+        lobby.tell(new GameCommands.JoinCommand(), self());
 	}
 	
 	@Override
@@ -38,6 +40,9 @@ public class WebsocketActor extends UntypedActor {
 		} else if (msg instanceof GameCommands.UpdateCommand) {
 			GameCommands.UpdateCommand updateCommand = (GameCommands.UpdateCommand) msg;
 			out.tell(updateCommand.getJson(), self());
+		} else if (msg instanceof GameCommands.StartGame) {
+			GameCommands.StartGame game = (GameCommands.StartGame) msg;
+			this.game = game.getGame();
 		} else {
 			// Unrecognized message
 		}

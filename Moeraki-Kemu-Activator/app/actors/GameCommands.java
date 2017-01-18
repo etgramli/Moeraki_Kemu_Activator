@@ -1,8 +1,20 @@
 package actors;
 
+import akka.actor.ActorRef;
+
+
 public final class GameCommands {
 	
-	public static final class StartGame {}
+	public static final class StartGame {
+		private final ActorRef game;
+		public StartGame(final ActorRef game){
+			this.game = game;
+		}
+		public ActorRef getGame() {
+			return this.game;
+		}
+	}
+	public static final class JoinCommand {}
 	
 	public static final class SetDotCommand {
 		private final String coords;

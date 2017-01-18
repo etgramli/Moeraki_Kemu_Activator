@@ -16,19 +16,9 @@ import java.util.List;
 @Singleton
 public class WebsocketController extends Controller {
 
-    public static ActorRef lobby;
 
     @Inject
     public WebsocketController(ActorSystem actorSystem) {
-        lobby = actorSystem.actorOf(LobbyActor.props(actorSystem));
-    }
-
-    public Result strategoWui() {
-        return ok(views.html.plainBoard.render(0));
-    }
-
-    public LegacyWebSocket<String> socket() {
-        return WebSocket.withActor(WebsocketActor::props);
     }
 
 }
