@@ -41,3 +41,8 @@ ul.Spielende {
     text-decoration: none;
     color: #D3D3D3;
 }
+
+main {
+    margin-left: 20%;
+    margin-right: 20%;
+}
