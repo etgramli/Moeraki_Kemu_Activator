@@ -1,0 +1,62 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="moeraki-kemu-board">
+    <template>
+        <div class="container">
+            <div class="row">
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">Navigation</a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="http://localhost:9000">Home</a></li>
+                                <li><a href="http://localhost:9000/manual">Spielanleitung</a></li>
+                                <li class="active"><a href="http://localhost:9000/start">Start</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row" id="title">
+                <header class="col-md-12">
+                    <h1>Moeraki-Kemu</h1>
+                    <hr>
+                </header>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="center">
+            @for(i <- 0 until 8) {
+            <tr>
+                @for(j <- 0 until 8) {
+                <th class="gameCell" id="@i-@j">&nbsp;</th>
+                }
+            </tr>
+            }
+            </table>
+        </div>
+        
+        </table>
+    </template>
+    
+    <script>
+        Polymer({
+
+            is: 'moeraki-kemu-board',
+
+            properties: {
+                prop1: {
+                type: String,
+                value: 'moeraki-kemu-board',
+            },
+        },
+    });
+  </script>
+</dom-module>
