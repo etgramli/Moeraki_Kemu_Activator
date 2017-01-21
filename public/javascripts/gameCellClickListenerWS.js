@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var mySocket = new WebSocket('ws://localhost:9000/ws');
+    var mySocket = new WebSocket('wss://aqueous-falls-42032.herokuapp.com/ws');
     mySocket.onopen    = function(event) {$('#socketTest').text("Verbindung zum Server hergestellt.");};
     mySocket.onclose   = function(event) {$('#socketTest').text("Spiel beendet oder abgebrochen!");};
     mySocket.onerror   = function(event) {alert("Leider ist ein Problem aufgetreten!");};
