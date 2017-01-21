@@ -3,8 +3,8 @@
 }*/
 
 th {
-  height: 100px;
-  width: 100px;
+  height: 95px;
+  width: 95px;
   /* background-color: rgba(0, 0, 255, 0.67); Blue */
   /* background-color: rgba(0, 127, 0, 0.67); Green */
 }
@@ -22,12 +22,12 @@ h1 {
     text-align: center;
     font-family: Tahoma, sans-serif;
     word-spacing: 0.9EM;
-    background-color: #2F4F4F;
+    background-color: #DC143C;
 }
 
 .container .row .col-md-12 .navbar-brand {
     text-decoration: none;
-    color: #D3D3D3;
+    color: #2F4F4F;
 }
 
 .table-responsive {
