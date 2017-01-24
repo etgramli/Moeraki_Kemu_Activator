@@ -3,8 +3,8 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /index                      controllers.WebUI.index
-GET     /                           controllers.WebUI.plainBoard
+GET     /                           controllers.WebUI.index
+GET     /plainBoard                 controllers.WebUI.plainBoard
 GET	    /manual                     controllers.WebUI.getManual
 
 # Map static resources from the /public folder to the /assets URL path
