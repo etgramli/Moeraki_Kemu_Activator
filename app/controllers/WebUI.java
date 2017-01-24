@@ -28,12 +28,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Singleton
 public class WebUI extends Controller {
-    
 	public static ActorRef actorLobby;
     public static ActorRef lobby;
 	private static WebsocketController wsController;
 	
 	private static Map<String, IController> controllers = new HashMap<>();
+	private static Map<String, String> userDB = new HashMap<>();
 	
 	public WebUI() {
 		ActorSystem actorSystem = ActorSystem.create("MoerakiSystem");
@@ -72,7 +72,7 @@ public class WebUI extends Controller {
     	return redirect(routes.WebUI.index());
     }
     
-    public  Result authenticate() {
+    public Result authenticate() {
         Form<User> loginform = DynamicForm.form(User.class).bindFromRequest();
 
         User user = User.authenticate(loginform.get());
@@ -96,28 +96,52 @@ public class WebUI extends Controller {
         }
     }
     
-    public static class User {
-        private final static String defaultUser = "test@123.de";
-        private final static String defaultPasswort = "nsa";
+    public Result signup() {
+        Form<User> loginform = DynamicForm.form(User.class).bindFromRequest();
 
+        ObjectNode response = Json.newObject();
+        User account = loginform.get();
+        boolean exists = userDB.containsKey(account.email);
+
+        if (loginform.hasErrors() || exists) {
+            response.put("success", false);
+            response.put("errors", loginform.errorsAsJson());
+            if (exists) {
+                flash("errors", "Account already exists");
+            }
+
+            return badRequest(views.html.signup.render(loginform));
+        } else {
+            userDB.put(loginform.get().email, loginform.get().password);
+            session().clear();
+            session("email", loginform.get().email);
+            return redirect(routes.WebUI.index());
+        }
+    }
+    
+    public Result signupForm() {
+        return ok(views.html.signup.render(Form.form(User.class)));
+    }
+    
+    public static class User {
         public String email;
         public String password;
-        
-        public User() {}
-  
+
+        public User() { }
+
         private User(final String email, final String password) {
             this.email = email;
             this.password = password;
         }
-        
-        public static User authenticate(User user){
-            if (user.email.equals(defaultUser) && user.password.equals(defaultPasswort)) {
-                return new User(user.email, user.password);
-   	        }
- 
+
+     	public static User authenticate(User user){
+     	    if (user != null && userDB.containsKey(user.email) && userDB.get(user.email).equals(user.password)) {
+     	        return new User(user.email, user.password);
+     	    }
+
     	    return null;
     	}
-    }
+   }
     
     
     public static class Secured extends Security.Authenticator {

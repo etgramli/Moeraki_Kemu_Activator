@@ -14,6 +14,9 @@ GET 	/login						controllers.WebUI.login
 GET 	/logout						controllers.WebUI.logout
 POST    /login                      controllers.WebUI.authenticate
 
+GET         /signup                 controllers.WebUI.signupForm
+POST        /signup                 controllers.WebUI.signup
+
 # New Game
 #GET		/start						controllers.WebUI.startGame # Old route for AJAX
 GET		/start						controllers.WebUI.plainBoard
