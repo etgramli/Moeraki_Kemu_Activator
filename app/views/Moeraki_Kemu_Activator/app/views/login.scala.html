@@ -1,0 +1,31 @@
+@(form: play.data.Form[WebUI.User])
+<html>
+    <head>
+        <title>Moeraki-Kemu</title>
+    </head>
+    <body>
+        <header>
+            <a href="@routes.WebUI.plainBoard" id = "logo"><span>Moeraki-Kemu</span></a>
+        </header>
+        @helper.form(routes.WebUI.authenticate) {
+   <h1>Sign in</h1>
+   
+   @if(form.hasGlobalErrors) {
+    <p class="error">
+        @form.globalError.message
+    </p>
+}
+
+   <p>
+       <input type="email" name="email" placeholder="Email" value="@form("email").value">
+   </p>
+   <p>
+       <input type="password" name="password" placeholder="Password">
+   </p>
+   <p>
+       <button type="submit">Login</button>
+   </p>
+}
+        <a href="@routes.WebUI.authenticate">Google Login</a> <br>
+    </body>
+</html>
