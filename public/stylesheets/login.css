@@ -1,0 +1,21 @@
+h1 {
+    text-align: center;
+}
+
+.form-group {
+    text-align: center;
+}
+
+label {
+    min-width: 6em;
+    display: inline-block;
+    text-align: left;
+}
+
+.btn-group {
+    text-align: center;
+}
+
+.g-signin2 {
+    text-align: center;
+}

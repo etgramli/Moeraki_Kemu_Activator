@@ -92,7 +92,7 @@ public class WebUI extends Controller {
             String email = session("email");
             IController controller = controllers.get(email);
             controllers.put(email,controller );
-            return redirect(routes.WebUI.index());
+            return redirect(routes.WebUI.plainBoard());
         }
     }
     
@@ -115,7 +115,7 @@ public class WebUI extends Controller {
             userDB.put(loginform.get().email, loginform.get().password);
             session().clear();
             session("email", loginform.get().email);
-            return redirect(routes.WebUI.index());
+            return redirect(routes.WebUI.plainBoard());
         }
     }
     
